@@ -1,0 +1,26 @@
+<h4>Ma voiture</h4>
+<span *ngIf="voitureAffichee; else elseMarkup">
+  <button style="width:10em;height:10em;margin:2em;float:left;"
+  (click)="onSelect()"
+  >Sélectionner</button>
+  <label>Marque :</label> {{ voitureAffichee.marque }}<br />
+  <label>Modèle :</label> <span [innerHTML]="voitureAffichee.modele"></span><br />
+  <span *ngIf="voitureAffichee.couleur" title="{{'La couleur est ' + voitureAffichee.couleur!}}">
+    <label>Couleur :</label> {{ voitureAffichee.couleur ? voitureAffichee.couleur : "non connue" }}<br />
+  </span>
+
+  <!-- <label>Puissance fiscale :</label> <span
+        [ngStyle]="{padding:voitureAffichee.puissanceFiscale*10 + 'px', 'background-color': 'yellow'}"
+        [style.color]="voitureAffichee.puissanceFiscale > 6 ? 'red': ''"
+        [style.background-color]="voitureAffichee.puissanceFiscale > 6 ? 'blue': ''"
+        [style.transform]="'rotate('+ voitureAffichee.puissanceFiscale*10 +'deg)'"
+        [style.font-size.px]="voitureAffichee.puissanceFiscale*10"
+        >{{voitureAffichee.puissanceFiscale}}</span><br /> -->
+
+  <label>Puissance fiscale :</label> <span [ngClass]="{danger:voitureAffichee.puissanceFiscale > 4, important:voitureAffichee.puissanceFiscale > 8}" [class.danger]="voitureAffichee.puissanceFiscale > 4">{{voitureAffichee.puissanceFiscale}}</span><br />
+  <button (click)="this.ajouterUnCheval()">Ajouter 1 CV fiscal</button>
+  <hr style="clear:both;">
+</span>
+<ng-template #elseMarkup>
+  <p>La voiture n'est pas définie.</p>
+</ng-template>
