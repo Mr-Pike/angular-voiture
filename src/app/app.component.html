@@ -1,12 +1,9 @@
-<h3>Mon application</h3>
-<p>{{ title }}</p>
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+</div>
+<router-outlet></router-outlet>
 
-<!--
-<app-voiture #v1 [voitureAffichee]="voitures[0]"></app-voiture>
-<hr />
-<app-voiture [voitureAffichee]="v1.voitureAffichee"></app-voiture>
-<hr />
--->
 
-<app-voiture-liste #listeVoitures [voitures]="voitures"></app-voiture-liste>
-<app-voiture-edit [_voitureEditee]="listeVoitures.voitureSelectionnee"></app-voiture-edit>

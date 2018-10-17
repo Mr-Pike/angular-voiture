@@ -1,25 +1,15 @@
 <h3>Edition de voiture</h3>
-
-<form (submit)="updateVoiture()" #formValidation="ngForm" ngForm>
+<form #formValidation="ngForm" ngForm (submit)="updateVoiture()">
   <div class="form-group">
     <label for="marque">Marque</label>
     <input #marqueValidation="ngModel" type="text" id="marque" name="marque"
-    [(ngModel)]="cloneVoiture.marque"
-    required minlength="2">
-    <span class="danger" *ngIf='marqueValidation.invalid && marqueValidation?.errors.required && marqueValidation.touched'>La marque est requise.</span>
-    <span class="danger" *ngIf='marqueValidation.invalid && marqueValidation?.errors.minlength && marqueValidation.touched'>La marque doit avoir au moins 5 caractères.</span>
-
+      required minlength="2"
+      [(ngModel)]="cloneVoiture.marque">
+    <span class="danger" *ngIf="marqueValidation.invalid && marqueValidation.errors.required && marqueValidation.touched">La marque est requise</span>
   </div>
-
   <div class="form-group">
-    <label for="modele">Modèle</label>
-    <input type="text" id="modele" name="modele" [(ngModel)]="cloneVoiture.modele" required minlength="2">
+      <label for="modele">Modèle</label>
+      <input type="text" id="modele" name="modele" required minlength="2" [(ngModel)]="cloneVoiture.modele">
   </div>
-
-  <!--<div class="form-group">
-    <label for="couleur">Couleur</label>
-    <input type="text" id="couleur" name="couleur" required minlength="2">
-  </div>-->
-
-  <input [disabled]="formValidation.invalid" type="submit" value="Valider">
+  <input [disabled]="formValidation.invalid" type="submit" name="submit" value="Valider">
 </form>

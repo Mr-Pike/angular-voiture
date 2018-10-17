@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Voiture } from 'src/app/models/voiture';
 
 @Component({
@@ -6,39 +6,23 @@ import { Voiture } from 'src/app/models/voiture';
   templateUrl: './voiture-item.component.html',
   styleUrls: ['./voiture-item.component.css']
 })
-export class VoitureItemComponent implements OnInit, OnChanges {
-
-  constructor() {
-    /*this.voitureAffichee.marque = 'Peugeot';
-    this.voitureAffichee.modele = '<b>208</b>';
-    this.voitureAffichee.couleur = 'bleu';*/
-    // setInterval(() => {
-    //   this.title = this.title + "*"
-    // }, 1000);
-  }
-
-  @Output()
-  select = new EventEmitter<Voiture>();
-
+export class VoitureItemComponent implements OnInit {
 
   @Input()
   voitureAffichee!: Voiture;
 
-  @Input()
-  extendedView = false;
+  @Output()
+  select = new EventEmitter<Voiture>();
 
-  ajouterUnCheval() {
-    this.voitureAffichee.puissanceFiscale++;
+  onSelect(){
+    this.select.emit(this.voitureAffichee);
   }
 
-  onSelect() {
-    this.select.emit(this.voitureAffichee);
+  constructor(){
+
   }
 
   ngOnInit() {
   }
 
-  ngOnChanges(changes) {
-    console.log('changement dans VoitureComponent');
-  }
 }
