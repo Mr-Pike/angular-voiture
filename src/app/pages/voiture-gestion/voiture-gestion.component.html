@@ -1,3 +1,5 @@
 <h3>Gestion des voitures</h3>
-<app-voiture-liste #listeVoitures [voitures]="voitures"></app-voiture-liste>
-<app-voiture-edit [(voitureEditee)]="listeVoitures.voitureSelectionnee"></app-voiture-edit>
+<app-double-colonne appHighlight="green">
+  <app-voiture-liste class="colonne1" #listeVoitures [voitures]="voitures"></app-voiture-liste>
+  <app-voiture-edit class="colonne2" [(voitureEditee)]="listeVoitures.voitureSelectionnee"></app-voiture-edit>
+</app-double-colonne>

@@ -1,0 +1,21 @@
+<h3>Voiture</h3>
+<form [formGroup]="formGroup" (submit)="save()" *ngIf="voitureAffichee && !isBusy && !messageAlerte">
+  <div class="form-group">
+    <label for="marque">Marque</label>
+    <input formControlName="marque" type="text" id="marque" name="marque" required minlength="2">
+    <!--<div *ngIf="formGroup.controls.marque.errors?.minlength">
+      Au moins {{formGroup.controls.marque.errors.minlength.requiredlength}} caractères
+    </div>-->
+  </div>
+  <div class="form-group">
+      <label for="modele">Modèle</label>
+      <input formControlName="modele" type="text" id="modele" name="modele" required minlength="2">
+  </div>
+  <input type="submit" name="submit" [disabled]="formGroup.dirty && formGroup.invalid" value="Valider">
+</form>
+<ul *ngIf="formGroup.errors">
+  <li *ngFor="let error of formGroup.errors">
+    {{error | json}}
+  </li>
+</ul>
+<div *ngIf="messageAlerte" class="alert alert-danger">{{messageAlerte}}</div>

@@ -1,0 +1,11 @@
+<p>
+  double-colonne works!
+</p>
+<div class="row">
+  <div class="col-{{nbCol1}}">
+      <ng-content select=".colonne1"></ng-content>
+  </div>
+  <div class="col-{{12 - nbCol1}}">
+      <ng-content select=".colonne2"></ng-content>
+  </div>
+</div>

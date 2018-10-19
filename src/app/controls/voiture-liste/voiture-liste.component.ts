@@ -22,6 +22,8 @@ export class VoitureListeComponent implements OnInit {
     this.voitureSelectionnee = v;
   }
 
+  trackBy = (v) => v.id;
+
   ngOnInit() {
   }
 

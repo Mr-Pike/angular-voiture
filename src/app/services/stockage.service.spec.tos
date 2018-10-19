@@ -1,0 +1,47 @@
+import { TestBed } from '@angular/core/testing';
+
+import { StockageService, StockageServiceDbNameToken } from './stockage.service';
+import { Voiture } from '../models/voiture';
+
+describe('StockageService', () => {
+  beforeEach(() => TestBed.configureTestingModule({
+    providers:[
+      {provide: StockageServiceDbNameToken, useValue: "mabase"}
+    ]
+  }));
+
+  it('should be created', ((done) => {
+    // Le code de mon test.
+    const service: StockageService = TestBed.get(StockageService);
+    expect(service).toBeTruthy();
+    // expect(service.name).toBeTruthy();
+    expect(service.bdd).toBe("mabase");
+
+    // Async.
+    await service.deleteVoiture("1");
+    var v = await service.getVoiture("1");
+    expect(v).toBeFalsy();
+    await service.updateVoiture({id: "1", marque: "Peugeot", modele: "108"} as Voiture);
+    var v2 = await service.getVoiture("1");
+    expect(v2.marque).toBe("Peugeot");
+    done();
+
+    // Non async.
+    service.deleteVoiture("1").then(() => {
+      service.getVoiture("1").then((voitureSupprimee) => {
+        expect(voitureSupprimee).toBeFalsy();
+        service.updateVoiture({id: "1", marque: "Peugeot", modele: "108"} as Voiture).then((v) => {
+          expect(v).toBeTruthy();
+          service.getVoiture("1").then(voitureSauvegardee => {
+            expect(voitureSauvegardee.marque).toBe("Peugeot");
+            done();
+          });
+        });
+      });
+    });
+    /*var spy = spyOn(service, "getVoitures").and.returnValue(Promise.resolve(true));
+    spy.calls.mostRecent().returnValue.then(() => {
+      except
+    });*/
+  }));
+});

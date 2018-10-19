@@ -1,12 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Voiture } from '../models/voiture';
+import { ServiceBase } from './service-base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DataDurService {
+export class DataDurService extends ServiceBase {
   voitures: Voiture[] = [];
   constructor() {
+    super();
     let v1 = new Voiture();
     v1.marque = "Peugeot";
     v1.modele = "208";
@@ -29,24 +31,45 @@ export class DataDurService {
   }
 
   getVoitures(): Promise<Voiture[]>{
-
-    return new Promise((resolve, reject)=>{
+    this.isBusy = true;
+    var promesse = new Promise<Voiture[]>((resolve, reject)=>{
       setTimeout(()=>{
         resolve(this.voitures);
       }, 1000);
     });
+
+    return this.gereIsBusy(promesse);
+  }
+
+  getVoiture(id: string): Promise<Voiture>{
+    var voiture = this.voitures.find(v=>v.id==id);
+    if(voiture){
+      return this.gereIsBusy(Promise.resolve(voiture));
+    }
+    return this.gereIsBusy(Promise.reject(new Error("Voiture non trouvée")));
   }
 
   createVoiture(): Voiture{
     return new Voiture();
   }
 
-  updateVoiture(voitureOriginale: Voiture|null, voitureModifiee: Voiture): Promise<Voiture>{
+  updateVoiture(voitureModifiee: Voiture): Promise<Voiture>{
+    var voitureOriginale = this.voitures.find(v=>v.id == voitureModifiee.id);
     if(!voitureOriginale){
       this.voitures.push(voitureModifiee);
-      return Promise.resolve(voitureModifiee);
+      return this.gereIsBusy(Promise.resolve(voitureModifiee));
     }
     Object.assign(voitureOriginale, voitureModifiee);
-    return Promise.resolve(voitureOriginale);
+    return this.gereIsBusy(Promise.resolve(voitureOriginale));
   }
+
+  /*gereIsBusy<T>(promesse: Promise<T>): Promise<T>{
+    this.isBusy=true;
+    promesse.then(c=>{
+      this.isBusy = false;
+    }).catch(c=>{
+      this.isBusy = false;
+    });
+    return promesse;
+  }*/
 }
